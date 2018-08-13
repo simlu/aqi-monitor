@@ -45,8 +45,7 @@ functions:
     description: Fetch and Handle AQI
     environment:
       DATA_BUCKET_NAME:
-        Value:
-          "Ref": DataS3Bucket
+        "Ref": DataS3Bucket
     events:
       - schedule: rate(10 minutes)
 
