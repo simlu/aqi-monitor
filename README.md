@@ -8,3 +8,8 @@
 
 Monitor AQI using AWS Lambda
 
+## Deploy
+
+```bash
+npm t && npm run clean-build && sls deploy --city=CITY && npm run clean
+```
