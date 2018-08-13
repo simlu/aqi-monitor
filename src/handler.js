@@ -23,7 +23,6 @@ module.exports.cron = rollbar.wrap(async () => {
     method: 'GET',
     uri: `http://api.waqi.info/feed/${process.env.CITY}/?token=${process.env.WAQI_TOKEN}`
   });
-  const current = JSON.parse(currentData);
 
   const s3Key = `${process.env.CITY}-last-reading.json.gz`;
 
@@ -38,7 +37,6 @@ module.exports.cron = rollbar.wrap(async () => {
       throw e;
     }
   }
-  const previous = JSON.parse(previousData);
 
   if (currentData !== previousData) {
     // update previous data
@@ -50,12 +48,13 @@ module.exports.cron = rollbar.wrap(async () => {
       Key: s3Key
     }).promise();
 
-    const prevLevel = getLevel(get(previous, "data.aqi", 0));
-    const curLevel = getLevel(get(current, "data.aqi", 0));
+    const prevLevel = getLevel(get(JSON.parse(previousData), "data.aqi", 0));
+    const curLevel = getLevel(get(JSON.parse(currentData), "data.aqi", 0));
     if (prevLevel !== curLevel) {
       // todo: notification
+      return "changed";
     }
   }
 
-  return current;
+  return "unchanged";
 });
