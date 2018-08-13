@@ -1,0 +1,38 @@
+{
+  "0": {
+    "level": "Good",
+    "impact": "Air quality is considered satisfactory, and air pollution poses little or no risk",
+    "recommendation": "None",
+    "color": "009966"
+  },
+  "51": {
+    "level": "Moderate",
+    "impact": "Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.",
+    "recommendation": "Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.",
+    "color": "ffde33"
+  },
+  "101": {
+    "level": "Unhealthy for Sensitive Groups",
+    "impact": "Members of sensitive groups may experience health effects. The general public is not likely to be affected.",
+    "recommendation": "Active children and adults, and people with respiratory disease, such as asthma, should limit prolonged outdoor exertion.",
+    "color": "ff9933"
+  },
+  "151": {
+    "level": "Unhealthy",
+    "impact": "Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects",
+    "recommendation": "Active children and adults, and people with respiratory disease, such as asthma, should avoid prolonged outdoor exertion; everyone else, especially children, should limit prolonged outdoor exertion",
+    "color": "cc0033"
+  },
+  "201": {
+    "level": "Very Unhealthy",
+    "impact": "Health warnings of emergency conditions. The entire population is more likely to be affected.",
+    "recommendation": "Active children and adults, and people with respiratory disease, such as asthma, should avoid all outdoor exertion; everyone else, especially children, should limit outdoor exertion.",
+    "color": "660099"
+  },
+  "301": {
+    "level": "Hazardous",
+    "impact": "Health alert: everyone may experience more serious health effects",
+    "recommendation": "Everyone should avoid all outdoor exertion",
+    "color": "7e0023"
+  }
+}
