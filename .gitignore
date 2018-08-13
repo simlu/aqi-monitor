@@ -29,3 +29,4 @@ lib/
 
 # configuration
 config/*.yml
+.serverless
