@@ -13,10 +13,10 @@ const rollbar = require('lambda-rollbar')({
 const s3 = new AWS.S3({ region: process.env.REGION });
 
 const levels = JSON.parse(fs.readFileSync(`${__dirname}/levels.json`));
-const getLevel = aqi => levels[String(Math.max(...Object
+const getLevel = aqi => String(Math.max(...Object
   .keys(levels)
   .map(value => parseInt(value, 10))
-  .filter(value => value <= aqi)))];
+  .filter(value => value <= aqi)));
 
 module.exports.cron = rollbar.wrap(async () => {
   const currentData = await request({
