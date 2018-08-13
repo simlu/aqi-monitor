@@ -1,4 +1,3 @@
-// @flow
 const path = require("path");
 const lambdaTester = require("lambda-tdd")({
   cwd: path.join(__dirname, ".."),
