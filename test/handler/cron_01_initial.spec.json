@@ -1,0 +1,10 @@
+{
+  "handler": "cron",
+  "timestamp": 1534226377,
+  "success": true,
+  "timeout": 5000,
+  "expect": {
+    "to.deep.equal()": "changed"
+  },
+  "event": {}
+}

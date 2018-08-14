@@ -1,0 +1,119 @@
+[
+    {
+        "scope": "http://api.waqi.info:80",
+        "method": "GET",
+        "path": "/feed/@4198/?token=--waqi-api-token--",
+        "body": "",
+        "status": 200,
+        "response": {
+            "status": "ok",
+            "data": {
+                "aqi": 192,
+                "idx": 4198,
+                "attributions": [
+                    {
+                        "url": "http://www.bcairquality.ca/",
+                        "name": "British Columbia, Canada Air Quality Monitoring Agency"
+                    }
+                ],
+                "city": {
+                    "geo": [
+                        -119.477367,
+                        49.862336
+                    ],
+                    "name": "Kelowna College",
+                    "url": "http://aqicn.org/city/british-comlumbia/kelowna-college/"
+                },
+                "dominentpol": "pm25",
+                "iaqi": {
+                    "co": {
+                        "v": 0.1
+                    },
+                    "no2": {
+                        "v": 3.9
+                    },
+                    "o3": {
+                        "v": 2.4
+                    },
+                    "p": {
+                        "v": 1022.1
+                    },
+                    "pm10": {
+                        "v": 92
+                    },
+                    "pm25": {
+                        "v": 192
+                    },
+                    "so2": {
+                        "v": 0.8
+                    },
+                    "t": {
+                        "v": 13.8
+                    },
+                    "w": {
+                        "v": 0.5
+                    }
+                },
+                "time": {
+                    "s": "2018-08-12 20:00:00",
+                    "tz": "-08:00",
+                    "v": 1534104000
+                }
+            }
+        }
+    },
+    {
+        "scope": "https://data-s3-bucket.s3.us-west-2.amazonaws.com:443",
+        "method": "GET",
+        "path": "/%404198-last-reading.json.gz",
+        "body": "",
+        "status": 200,
+        "response": [
+            "1f8b08000000000002035551416e833010fc0ada3318db9004b82539563df45ce5600822ab804dc094a688bf770d345225cbd2ececcc8ed713f456d9a1870ccc1d7cb82aab209b403d1032914a1ff0fa0d592cd2c407656d87f960d168127c4e307435096fd6b659188ee3c8f24261f718548df6c90a1592a3564d494da70e2df637ef6ceaa1c951f9de59697555de113bef635578ef46a3351deaca3b56a52e9e305f7c28887299aad2d0d4408894c58743b43ff871ca92bd8ca2fde535e7adaccda8959b5397554901fe85a477159a99ae0a9d6b98afa982c2346bacf0beeaa9b2e843986929a6415d6adb1ae7d4367247b6b8ac6882c2b8fb0b32ce04f56a23371cb194b0893628594cb0dd90e0522efd6d23f8564be582c97deb590afdcb90b384b0fd63a3058e2f72373b16dd1626701f2ab948029e04427a9267dc1dca6d7f88a2f28a9cd12e8a058f39e7f33cff02a8073e2910020000"
+        ],
+        "rawHeaders": [
+            "x-amz-id-2",
+            "j3zSjOWhavPSt3hdp56Gc1QftcELr4CaaAQ1dbFhOSh0Mp5sLTXRz/sSOx0SWYIOSFcwIvGi3/4=",
+            "x-amz-request-id",
+            "E0189FA8BB4DF558",
+            "Date",
+            "Mon, 13 Aug 2018 04:45:41 GMT",
+            "Last-Modified",
+            "Mon, 13 Aug 2018 04:44:24 GMT",
+            "ETag",
+            "\"8f19068f094106a8c985314f2a5b1082\"",
+            "Content-Encoding",
+            "gzip",
+            "Accept-Ranges",
+            "bytes",
+            "Content-Type",
+            "application/json",
+            "Content-Length",
+            "346",
+            "Server",
+            "AmazonS3"
+        ]
+    },
+    {
+        "scope": "https://data-s3-bucket.s3.us-west-2.amazonaws.com:443",
+        "method": "PUT",
+        "path": "/%404198-last-reading.json.gz",
+        "body": "1f8b08000000000002035551416e833010fc0ada3318db9004b82539563df45ce5600822ab804dc094a688bf770d345225cbd2ececcc8ed713f456d9a1870ccc1d7cb82aab209b403d1032914a1ff0fa0d592cd2c407656d87f960d168127c4e307435096fd6b659188ee3c8f24261f718548df6c90a1592a3564d494da70e2df637ef6ceaa1c951f9de59697555de113bef635578ef46a3351deaca3b56a52e9e305f7c28887299aad2d0d4408894c58743b43ff871ca92bd8ca2fde535e7adaccda8959b5397554901fe85a477159a99ae0a9d6b98afa982c2346bacf0beeaa9b2e843986929a6415d6adb1ae7d4367247b6b8ac6882c2b8fb0b32ce04f56a23371cb194b0893628594cb0dd90e0522efd6d23f8564be582c97deb590afdcb90b384b0fd63a3058e2f72373b16dd1626701f2ab948029e04427a9267dc1dca6d7f88a2f28a9cd12e8a058f39e7f33cff02a8073e2910020000",
+        "status": 200,
+        "response": "",
+        "rawHeaders": [
+            "x-amz-id-2",
+            "9Uu5C4vCPP7ph8V7cf1We4lBv8SilN74W9p6Lt2czHgEJDxSnk5XNgub2G4oz2SC21Xp+BtJtpc=",
+            "x-amz-request-id",
+            "62AFB2F1261EEF09",
+            "Date",
+            "Mon, 13 Aug 2018 04:45:42 GMT",
+            "ETag",
+            "\"8f19068f094106a8c985314f2a5b1082\"",
+            "Content-Length",
+            "0",
+            "Server",
+            "AmazonS3"
+        ]
+    }
+]

@@ -9,6 +9,10 @@ const rollbar = require('lambda-rollbar')({
   accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
   environment: process.env.CITY
 });
+const slack = require("slack-sdk")(
+  process.env.SLACK_WORKSPACE,
+  process.env.SLACK_SESSION_TOKEN
+);
 
 const s3 = new AWS.S3({ region: process.env.REGION });
 
@@ -51,7 +55,7 @@ module.exports.cron = rollbar.wrap(async () => {
     const prevLevel = getLevel(get(JSON.parse(previousData), "data.aqi", 0));
     const curLevel = getLevel(get(JSON.parse(currentData), "data.aqi", 0));
     if (prevLevel !== curLevel) {
-      // todo: notification
+      await slack.message.channel(process.env.SLACK_CHANNEL, "hi");
       return "changed";
     }
   }
