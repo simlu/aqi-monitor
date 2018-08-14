@@ -14,7 +14,7 @@ provider:
   stage: ${opt:city}
   region: ${file(config/${opt:city}.yml):REGION}
   memorySize: 128
-  timeout: 8
+  timeout: 30
   versionFunctions: false
   environment:
     ${file(config/${opt:city}.yml)}
