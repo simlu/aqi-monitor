@@ -55,7 +55,15 @@ module.exports.cron = rollbar.wrap(async () => {
     const prevLevel = getLevel(get(JSON.parse(previousData), "data.aqi", 0));
     const curLevel = getLevel(get(JSON.parse(currentData), "data.aqi", 0));
     if (prevLevel !== curLevel) {
-      await slack.message.channel(process.env.SLACK_CHANNEL, "hi");
+      const info = levels[curLevel];
+      const msg = [
+        `*Air Quality Index*: \`${info.level}\``,
+        `_${info.impact}_`,
+        info.recommendation,
+        info.image,
+        `*Reference*: \`https://aqicn.org/city/${process.env.CITY}\``
+      ].join("\\n\\n");
+      await slack.message.channel(process.env.SLACK_CHANNEL, msg);
       return "changed";
     }
   }
