@@ -8,6 +8,21 @@
 
 Monitor AQI using AWS Lambda
 
+## Configuration A City
+
+1) Create config with city name under `config/CITY.yml`
+2) Fill in variables
+
+```yml
+REGION: aws-deploy-region (e.g. us-west-2)
+CITY: waqi-city-id (e.g. @1234)
+ROLLBAR_ACCESS_TOKEN: your-rollbar-token (optional)
+WAQI_TOKEN: your-waqi-token
+SLACK_CHANNEL: your-slack-channel
+SLACK_WORKSPACE: your-slack-workspace
+SLACK_SESSION_TOKEN: your-slack-session-token
+```
+
 ## Deploy
 
 ```bash
