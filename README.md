@@ -8,6 +8,10 @@
 
 Monitor AQI using AWS Lambda
 
+Notifies Slack Channel with Status Message when the level changes.
+
+Allows monitoring of multiple Cities by using multiple deploys.
+
 ## Configuration A City
 
 1) Create config with city name under `config/CITY.yml`
@@ -22,6 +26,8 @@ SLACK_CHANNEL: your-slack-channel
 SLACK_WORKSPACE: your-slack-workspace
 SLACK_SESSION_TOKEN: your-slack-session-token
 ```
+
+*todo*: detail how to obtain above
 
 ## Deploy
 
