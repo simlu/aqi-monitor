@@ -62,7 +62,7 @@ module.exports.cron = rollbar.wrap(async () => {
         info.recommendation,
         info.image,
         `*Reference*: \`https://aqicn.org/city/${process.env.CITY}\``
-      ].join("\\n\\n");
+      ].join("\n\n");
       await slack.message.channel(process.env.SLACK_CHANNEL, msg);
       return "changed";
     }
