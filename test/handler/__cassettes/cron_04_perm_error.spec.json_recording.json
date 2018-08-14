@@ -1,0 +1,87 @@
+[
+    {
+        "scope": "http://api.waqi.info:80",
+        "method": "GET",
+        "path": "/feed/@4198/?token=--waqi-api-token--",
+        "body": "",
+        "status": 200,
+        "response": {
+            "status": "ok",
+            "data": {
+                "aqi": 192,
+                "idx": 4198,
+                "attributions": [
+                    {
+                        "url": "http://www.bcairquality.ca/",
+                        "name": "British Columbia, Canada Air Quality Monitoring Agency"
+                    }
+                ],
+                "city": {
+                    "geo": [
+                        -119.477367,
+                        49.862336
+                    ],
+                    "name": "Kelowna College",
+                    "url": "http://aqicn.org/city/british-comlumbia/kelowna-college/"
+                },
+                "dominentpol": "pm25",
+                "iaqi": {
+                    "co": {
+                        "v": 0.1
+                    },
+                    "no2": {
+                        "v": 3.9
+                    },
+                    "o3": {
+                        "v": 2.4
+                    },
+                    "p": {
+                        "v": 1022.1
+                    },
+                    "pm10": {
+                        "v": 92
+                    },
+                    "pm25": {
+                        "v": 192
+                    },
+                    "so2": {
+                        "v": 0.8
+                    },
+                    "t": {
+                        "v": 13.8
+                    },
+                    "w": {
+                        "v": 0.5
+                    }
+                },
+                "time": {
+                    "s": "2018-08-12 20:00:00",
+                    "tz": "-08:00",
+                    "v": 1534104000
+                }
+            }
+        }
+    },
+    {
+        "scope": "https://data-s3-bucket.s3.us-west-2.amazonaws.com:443",
+        "method": "GET",
+        "path": "/%404198-last-reading.json.gz",
+        "body": "",
+        "status": 403,
+        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Error><Code>SignatureDoesNotMatch</Code><Message>The request signature we calculated does not match the signature you provided. Check your key and signing method.</Message><AWSAccessKeyId>AKIAIXEIO2VM6LUPPWSA</AWSAccessKeyId><StringToSign>AWS4-HMAC-SHA256\n20180813T043523Z\n20180813/us-west-2/s3/aws4_request\ne2d5a977ef3f14380acedb62637808777265c40af7e5375fe2ba202150c35185</StringToSign><SignatureProvided>c842be53a8e50c9342ad43361e9d9080a4438fa5192b6b869389a0c6a246f5f5</SignatureProvided><StringToSignBytes>41 57 53 34 2d 48 4d 41 43 2d 53 48 41 32 35 36 0a 32 30 31 38 30 38 31 33 54 30 34 33 35 32 33 5a 0a 32 30 31 38 30 38 31 33 2f 75 73 2d 77 65 73 74 2d 32 2f 73 33 2f 61 77 73 34 5f 72 65 71 75 65 73 74 0a 65 32 64 35 61 39 37 37 65 66 33 66 31 34 33 38 30 61 63 65 64 62 36 32 36 33 37 38 30 38 37 37 37 32 36 35 63 34 30 61 66 37 65 35 33 37 35 66 65 32 62 61 32 30 32 31 35 30 63 33 35 31 38 35</StringToSignBytes><CanonicalRequest>GET\n/%404198-last-reading.json.gz\n\nhost:data-s3-bucket.s3.us-west-2.amazonaws.com\nx-amz-content-sha256:UNSIGNED-PAYLOAD\nx-amz-date:20180813T043523Z\n\nhost;x-amz-content-sha256;x-amz-date\nUNSIGNED-PAYLOAD</CanonicalRequest><CanonicalRequestBytes>47 45 54 0a 2f 25 34 30 34 31 39 38 2d 6c 61 73 74 2d 72 65 61 64 69 6e 67 2e 6a 73 6f 6e 2e 67 7a 0a 0a 68 6f 73 74 3a 61 71 69 2d 6d 6f 6e 69 74 6f 72 2d 6b 65 6c 6f 77 6e 61 2d 64 61 74 61 73 33 62 75 63 6b 65 74 2d 72 6e 7a 6c 63 6f 6f 32 34 6a 62 72 2e 73 33 2e 75 73 2d 77 65 73 74 2d 32 2e 61 6d 61 7a 6f 6e 61 77 73 2e 63 6f 6d 0a 78 2d 61 6d 7a 2d 63 6f 6e 74 65 6e 74 2d 73 68 61 32 35 36 3a 55 4e 53 49 47 4e 45 44 2d 50 41 59 4c 4f 41 44 0a 78 2d 61 6d 7a 2d 64 61 74 65 3a 32 30 31 38 30 38 31 33 54 30 34 33 35 32 33 5a 0a 0a 68 6f 73 74 3b 78 2d 61 6d 7a 2d 63 6f 6e 74 65 6e 74 2d 73 68 61 32 35 36 3b 78 2d 61 6d 7a 2d 64 61 74 65 0a 55 4e 53 49 47 4e 45 44 2d 50 41 59 4c 4f 41 44</CanonicalRequestBytes><RequestId>CEE56AEB2E21BC85</RequestId><HostId>zRUSH8hqw21dIENrMMSG7YBU6HpT6prNC5Lvlct2DAXPV5dVY6CzQqDmJ7+ewcgGoEZOwHI5EOk=</HostId></Error>",
+        "rawHeaders": [
+            "x-amz-request-id",
+            "CEE56AEB2E21BC85",
+            "x-amz-id-2",
+            "zRUSH8hqw21dIENrMMSG7YBU6HpT6prNC5Lvlct2DAXPV5dVY6CzQqDmJ7+ewcgGoEZOwHI5EOk=",
+            "Content-Type",
+            "application/xml",
+            "Transfer-Encoding",
+            "chunked",
+            "Date",
+            "Mon, 13 Aug 2018 04:49:51 GMT",
+            "Server",
+            "AmazonS3"
+        ]
+    }
+]

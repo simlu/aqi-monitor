@@ -1,0 +1,55 @@
+service: aqi-monitor
+
+package:
+  exclude:
+    - test/**
+    - coverage/**
+    - config/**
+    - flow-typed/**
+    - src/**
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:city}
+  region: ${file(config/${opt:city}.yml):REGION}
+  memorySize: 128
+  timeout: 30
+  versionFunctions: false
+  environment:
+    ${file(config/${opt:city}.yml)}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:PutBucketNotification"
+        - "s3:ListBucket"
+      Resource:
+        - Fn::GetAtt:
+          - DataS3Bucket
+          - Arn
+    - Effect: "Allow"
+      Action:
+        - "s3:GetObject"
+        - "s3:PutObject"
+      Resource:
+        - 'Fn::Join':
+          - '/'
+          - - Fn::GetAtt:
+              - DataS3Bucket
+              - Arn
+            - '*'
+
+functions:
+  cron:
+    handler: lib/handler.cron
+    description: Fetch and Handle AQI
+    environment:
+      DATA_BUCKET_NAME:
+        "Ref": DataS3Bucket
+    events:
+      - schedule: rate(10 minutes)
+
+resources:
+  Resources:
+    DataS3Bucket:
+      Type: AWS::S3::Bucket

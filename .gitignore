@@ -26,3 +26,7 @@ coverage/
 .coveralls.yml
 .idea/dictionaries
 lib/
+
+# configuration
+config/*.yml
+.serverless

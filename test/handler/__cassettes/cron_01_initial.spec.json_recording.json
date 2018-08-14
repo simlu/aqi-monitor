@@ -1,0 +1,132 @@
+[
+    {
+        "scope": "http://api.waqi.info:80",
+        "method": "GET",
+        "path": "/feed/@4198/?token=--waqi-api-token--",
+        "body": "",
+        "status": 200,
+        "response": {
+            "status": "ok",
+            "data": {
+                "aqi": 173,
+                "idx": 4198,
+                "attributions": [
+                    {
+                        "url": "http://www.bcairquality.ca/",
+                        "name": "British Columbia, Canada Air Quality Monitoring Agency"
+                    }
+                ],
+                "city": {
+                    "geo": [
+                        49.862336,
+                        -119.477367
+                    ],
+                    "name": "Kelowna College",
+                    "url": "http://aqicn.org/city/british-comlumbia/kelowna-college/"
+                },
+                "dominentpol": "pm25",
+                "iaqi": {
+                    "co": {
+                        "v": 0.1
+                    },
+                    "no2": {
+                        "v": 5.1
+                    },
+                    "o3": {
+                        "v": 7.9
+                    },
+                    "p": {
+                        "v": 1018.5
+                    },
+                    "pm10": {
+                        "v": 89
+                    },
+                    "pm25": {
+                        "v": 173
+                    },
+                    "so2": {
+                        "v": 0.6
+                    },
+                    "t": {
+                        "v": 18.3
+                    }
+                },
+                "time": {
+                    "s": "2018-08-13 21:00:00",
+                    "tz": "-08:00",
+                    "v": 1534194000
+                }
+            }
+        }
+    },
+    {
+        "scope": "https://data-s3-bucket.s3.us-west-2.amazonaws.com:443",
+        "method": "GET",
+        "path": "/%404198-last-reading.json.gz",
+        "body": "",
+        "status": 404,
+        "response": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Error><Code>NoSuchKey</Code><Message>The specified key does not exist.</Message><Key>@4198-last-reading.json.gz</Key><RequestId>BE0A041D27CAF9CA</RequestId><HostId>3zR9/T4wQ/R66KS9tUZmrXqzFK0q0rGhCaBPirE3b1sJEKrzi1wiTxBeJynk+bNzUbZCnCIWQYE=</HostId></Error>",
+        "rawHeaders": [
+            "x-amz-request-id",
+            "BE0A041D27CAF9CA",
+            "x-amz-id-2",
+            "3zR9/T4wQ/R66KS9tUZmrXqzFK0q0rGhCaBPirE3b1sJEKrzi1wiTxBeJynk+bNzUbZCnCIWQYE=",
+            "Content-Type",
+            "application/xml",
+            "Transfer-Encoding",
+            "chunked",
+            "Date",
+            "Tue, 14 Aug 2018 06:06:24 GMT",
+            "Server",
+            "AmazonS3"
+        ]
+    },
+    {
+        "scope": "https://data-s3-bucket.s3.us-west-2.amazonaws.com:443",
+        "method": "PUT",
+        "path": "/%404198-last-reading.json.gz",
+        "body": "1f8b08000000000002035551cb6e833010fc15b4673036e6e95b9a63d543cf550e862062056c02a63445fc7bd7402b55b22ccdecceecacbdc068a59d461060eee0c3555a096201f9502058c67d50d72f10312b721fa4b5832a27ab8c46c1c702d3d0a2f0666d2fc2709e675256520d8f49b6ca3e49254374d4b2abb1e96550568d37ef6cdaa92b95f4bdb3d4f22abd931abcf75de1bd19adac19946ebc5353ebea09ebc5870a4b2e53531b9c1a17244f23ce533f60ac207196f134bbfccd79ad5b336be9e6b4755363807f2171af4a133334a1730dcb3d5550996e8f15de773d329b3e84151fc5744ad7daf6c639f55d94a0adda9e6881cab8fb1304250c7bb5890e9c6cd8f00366a440d81f88519693c4111da307976f0dcefde8c93812e39f21252962fb5bcd095f1d566eef05dc1746e81ad03c60dc8b98a0140f26b5df58427a474e9a70fcd09852baaeeb0f7fef482c02020000",
+        "status": 200,
+        "response": "",
+        "rawHeaders": [
+            "x-amz-id-2",
+            "R8EowuBJixHwUA0OboK8QPx7UsIp8KNsvbNeAOYZzjkhzQCqC7M+jLxqSXT2l8Zaeo/YhIbkfSE=",
+            "x-amz-request-id",
+            "9BDF6EA38F2071BA",
+            "Date",
+            "Tue, 14 Aug 2018 06:06:25 GMT",
+            "ETag",
+            "\"2549251466f7dfa6b6018a8ecad4a5c3\"",
+            "Content-Length",
+            "0",
+            "Server",
+            "AmazonS3"
+        ]
+    },
+    {
+        "scope": "https://slack-workspace.slack.com:443",
+        "method": "POST",
+        "path": "/api/rtm.start",
+        "body": "*",
+        "status": 200,
+        "response": {
+            "ok": true,
+            "channels": [
+                {
+                    "id": "C3Y5NQXQZ",
+                    "name": "slack-channel"
+                }
+            ]
+        }
+    },
+    {
+        "scope": "https://slack-workspace.slack.com:443",
+        "method": "POST",
+        "path": "/api/chat.postMessage",
+        "body": "*",
+        "status": 200,
+        "response": {
+            "ok": true
+        }
+    }
+]
