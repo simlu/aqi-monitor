@@ -1,0 +1,10 @@
+[
+  {
+    "scope": "http://www.env.gov.bc.ca:80",
+    "method": "GET",
+    "path": "/epd/bcairquality/aqo/xml/Current_Hour.xml",
+    "body": "",
+    "status": 200,
+    "response": "<invalid_xml"
+  }
+]

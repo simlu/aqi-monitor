@@ -90,8 +90,10 @@
     "aws-sdk": "2.291.0",
     "lambda-rollbar": "1.9.9",
     "lodash.get": "4.4.2",
+    "object-scan": "1.2.2",
     "request": "2.88.0",
     "request-promise-native": "1.0.5",
-    "slack-sdk": "1.0.0"
+    "slack-sdk": "1.0.0",
+    "xml2js": "0.4.19"
   }
 }

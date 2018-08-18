@@ -1,6 +1,8 @@
 const fs = require("fs");
 const zlib = require("zlib");
 const request = require("request-promise-native");
+const xml2js = require("xml2js");
+const objectScan = require("object-scan");
 const AWS = require("aws-sdk");
 const get = require("lodash.get");
 const rollbar = require('lambda-rollbar')({
@@ -14,6 +16,7 @@ const slack = require("slack-sdk")(
   process.env.SLACK_SESSION_TOKEN
 );
 
+const parser = new xml2js.Parser();
 const s3 = new AWS.S3({ region: process.env.REGION });
 
 const levels = JSON.parse(fs.readFileSync(`${__dirname}/levels.json`));
@@ -23,10 +26,23 @@ const getLevel = aqi => String(Math.max(...Object
   .filter(value => value <= aqi)));
 
 module.exports.cron = rollbar.wrap(async () => {
-  const currentData = await request({
+  const xmlString = await request({
     method: 'GET',
-    uri: `http://api.waqi.info/feed/${process.env.CITY}/?token=${process.env.WAQI_TOKEN}`
+    uri: `http://www.env.gov.bc.ca/epd/bcairquality/aqo/xml/Current_Hour.xml`
   });
+  const xmlJson = await new Promise((resolve, reject) => parser
+    .parseString(xmlString, (err, res) => (err ? reject(err) : resolve(res))));
+
+  const target = objectScan(["AQO_TYPE.STATIONS[0].STRD[*].$.NAME"], {
+    filterFn: (key, value) => value === process.env.CITY,
+    joined: false
+  })(xmlJson);
+  const station = get(xmlJson, target[0].slice(0, -2));
+  const pm25 = objectScan(["**"], {
+    filterFn: (key, value) => key.endsWith('.NM') && value === 'PM25',
+    joined: false
+  })(station);
+  const currentData = JSON.stringify({ aqi: get(station, pm25[0].slice(0, -1).concat("VL")) });
 
   const s3Key = `${process.env.CITY}-last-reading.json.gz`;
 
@@ -52,8 +68,8 @@ module.exports.cron = rollbar.wrap(async () => {
       Key: s3Key
     }).promise();
 
-    const prevLevel = getLevel(get(JSON.parse(previousData), "data.aqi", 0));
-    const curLevel = getLevel(get(JSON.parse(currentData), "data.aqi", 0));
+    const prevLevel = getLevel(get(JSON.parse(previousData), "aqi", 0));
+    const curLevel = getLevel(get(JSON.parse(currentData), "aqi", 0));
     if (prevLevel !== curLevel) {
       const info = levels[curLevel];
       const msg = [
@@ -61,7 +77,7 @@ module.exports.cron = rollbar.wrap(async () => {
         `_${info.impact}_`,
         info.recommendation,
         info.image,
-        `*Reference*: \`https://aqicn.org/city/${process.env.CITY}\``
+        `*Reference*: \`http://tiny.cc/nn83wy\``
       ].join("\n\n");
       await slack.message.channel(process.env.SLACK_CHANNEL, msg);
       return "changed";
