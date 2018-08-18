@@ -33,11 +33,11 @@ module.exports.cron = rollbar.wrap(async () => {
   const xmlJson = await new Promise((resolve, reject) => parser
     .parseString(xmlString, (err, res) => (err ? reject(err) : resolve(res))));
 
-  const target = objectScan(["AQO_TYPE.STATIONS[0].STRD[*].$.NAME"], {
+  const stationPath = objectScan(["AQO_TYPE.STATIONS[0].STRD[*].$.NAME"], {
     filterFn: (key, value) => value === process.env.CITY,
     joined: false
   })(xmlJson);
-  const station = get(xmlJson, target[0].slice(0, -2));
+  const station = get(xmlJson, stationPath[0].slice(0, -2));
   const pm25 = objectScan(["**"], {
     filterFn: (key, value) => key.endsWith('.NM') && value === 'PM25',
     joined: false
