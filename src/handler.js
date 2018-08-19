@@ -2,7 +2,6 @@ const fs = require("fs");
 const zlib = require("zlib");
 const request = require("request-promise-native");
 const xml2js = require("xml2js");
-const AWS = require("aws-sdk");
 const get = require("lodash.get");
 const aqibot = require('aqi-bot');
 const rollbar = require('lambda-rollbar')({
@@ -11,13 +10,13 @@ const rollbar = require('lambda-rollbar')({
   accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
   environment: process.env.STATION
 });
+const aws = require("aws-sdk-wrap")({ config: { region: process.env.REGION } });
 const slack = require("slack-sdk")(
   process.env.SLACK_WORKSPACE,
   process.env.SLACK_SESSION_TOKEN
 );
 
 const xmlParser = new xml2js.Parser();
-const s3 = new AWS.S3({ region: process.env.REGION });
 
 const levels = JSON.parse(fs.readFileSync(`${__dirname}/levels.json`));
 const getLevel = aqi => String(Math.max(...Object
@@ -67,27 +66,21 @@ module.exports.cron = rollbar.wrap(async () => {
 
   const s3Key = `${process.env.STATION}-last-reading.json.gz`;
 
-  let previousData = "{}";
-  try {
-    previousData = zlib.gunzipSync((await s3.getObject({
-      Bucket: process.env.DATA_BUCKET_NAME,
-      Key: s3Key
-    }).promise()).Body).toString("utf8");
-  } catch (e) {
-    if (e.code !== 'NoSuchKey') {
-      throw e;
-    }
-  }
+  const previousData = await aws.call("s3", "getObject", {
+    Bucket: process.env.DATA_BUCKET_NAME,
+    Key: s3Key
+  }, { expectedErrorCodes: ["NoSuchKey"] })
+    .then(r => (r.NoSuchKey ? "{}" : zlib.gunzipSync(r.Body).toString("utf8")));
 
   if (currentData !== previousData) {
     // update previous data
-    await s3.putObject({
+    await aws.call("s3", "putObject", {
       ContentType: "application/json",
       ContentEncoding: "gzip",
       Body: zlib.gzipSync(currentData, { level: 9 }),
       Bucket: process.env.DATA_BUCKET_NAME,
       Key: s3Key
-    }).promise();
+    });
 
     const prevLevel = getLevel(get(JSON.parse(previousData), "aqi", 0));
     const curLevel = getLevel(get(JSON.parse(currentData), "aqi", 0));
