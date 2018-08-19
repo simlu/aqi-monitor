@@ -47,7 +47,7 @@ functions:
       DATA_BUCKET_NAME:
         "Ref": DataS3Bucket
     events:
-      - schedule: rate(10 minutes)
+      - schedule: rate(11 minutes)
 
 resources:
   Resources:
