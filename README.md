@@ -52,5 +52,5 @@ Follow the instructions provided [here](https://github.com/simlu/slack-sdk#obtai
 Requires serverless framework to be installed. Use `npm i -g serverless`. Then run:
 
 ```bash
-npm t && npm run clean-build && sls deploy --city=CITY && npm run clean
+npm t && npm run clean-build && sls deploy --city=[FILL CITY NAME] && npm run clean
 ```
