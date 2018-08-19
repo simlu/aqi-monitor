@@ -1,0 +1,10 @@
+{
+  "handler": "cron",
+  "timestamp": 1534134923,
+  "success": false,
+  "timeout": 5000,
+  "expect(message)": {
+    "to.deep.equal()": "Unexpected end\nLine: 0\nColumn: 12\nChar: "
+  },
+  "event": {}
+}

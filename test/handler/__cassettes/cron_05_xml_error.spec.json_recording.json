@@ -1,0 +1,10 @@
+[
+  {
+    "scope": "http://www.env.gov.bc.ca:80",
+    "method": "GET",
+    "path": "/epd/bcairquality/aqo/xml/0500886_Current_Month.xml",
+    "body": "",
+    "status": 200,
+    "response": "<invalid_xml"
+  }
+]
