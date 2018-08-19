@@ -70,7 +70,7 @@ module.exports.cron = rollbar.wrap(async () => {
     Bucket: process.env.DATA_BUCKET_NAME,
     Key: s3Key
   }, { expectedErrorCodes: ["NoSuchKey"] })
-    .then(r => (r.NoSuchKey ? "{}" : zlib.gunzipSync(r.Body).toString("utf8")));
+    .then(r => (r === 'NoSuchKey' ? "{}" : zlib.gunzipSync(r.Body).toString("utf8")));
 
   if (currentData !== previousData) {
     // update previous data
