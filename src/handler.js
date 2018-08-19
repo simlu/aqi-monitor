@@ -2,21 +2,21 @@ const fs = require("fs");
 const zlib = require("zlib");
 const request = require("request-promise-native");
 const xml2js = require("xml2js");
-const objectScan = require("object-scan");
 const AWS = require("aws-sdk");
 const get = require("lodash.get");
+const aqibot = require('aqi-bot');
 const rollbar = require('lambda-rollbar')({
   verbose: process.env.ROLLBAR_VERBOSE === "1",
   enabled: !!process.env.ROLLBAR_ACCESS_TOKEN,
   accessToken: process.env.ROLLBAR_ACCESS_TOKEN,
-  environment: process.env.CITY
+  environment: process.env.STATION
 });
 const slack = require("slack-sdk")(
   process.env.SLACK_WORKSPACE,
   process.env.SLACK_SESSION_TOKEN
 );
 
-const parser = new xml2js.Parser();
+const xmlParser = new xml2js.Parser();
 const s3 = new AWS.S3({ region: process.env.REGION });
 
 const levels = JSON.parse(fs.readFileSync(`${__dirname}/levels.json`));
@@ -25,26 +25,47 @@ const getLevel = aqi => String(Math.max(...Object
   .map(value => parseInt(value, 10))
   .filter(value => value <= aqi)));
 
+const PollutantMapping = {
+  PM10: 'PM10',
+  PM25: 'PM25',
+  SO2: 'SO-2',
+  NO2: 'NO-2',
+  O3: 'OZNE',
+  CO: 'C--O'
+};
+
 module.exports.cron = rollbar.wrap(async () => {
-  const xmlString = await request({
+  const aqi = await request({
     method: 'GET',
-    uri: `http://www.env.gov.bc.ca/epd/bcairquality/aqo/xml/Current_Hour.xml`
-  });
-  const xmlJson = await new Promise((resolve, reject) => parser
-    .parseString(xmlString, (err, res) => (err ? reject(err) : resolve(res))));
+    uri: `http://www.env.gov.bc.ca/epd/bcairquality/aqo/xml/${process.env.STATION}_Current_Month.xml`
+  })
+    .then(e => new Promise((resolve, reject) => xmlParser
+      .parseString(e, (err, res) => (err ? reject(err) : resolve(get(res, "AQO_TYPE.STATIONS[0].STRD[0].READS[0].RD")
+        .reduce((list, reading) => Object.assign(list, {
+          [new Date(get(reading, "$.DT").replace(
+            /^(\d\d\d\d),(\d\d),(\d\d),(\d\d),(\d\d),(\d\d)$/,
+            "$1-$2-$3T$4:$5:$6"
+          )) / 1000]: get(reading, "PARAMS.0.PV")
+            .reduce((obj, measure) => Object.assign(obj, { [measure.$.NM]: measure.$.VL }), {})
+        }), {}))
+      ))))
+    .then((measures) => {
+      const promises = [];
+      const curHour = Math.max(...Object.keys(measures));
+      Object.keys(PollutantMapping).forEach((pollutantType) => {
+        const timeline = [];
+        for (let i = 0; i < 12; i += 1) {
+          timeline.push(parseFloat(get(measures, [curHour - i * 3600, PollutantMapping[pollutantType]], -1)));
+        }
+        promises.push(aqibot.AQICalculator.getAQIResult(aqibot.PollutantType[pollutantType], timeline[0]));
+      });
+      return Promise.all(promises);
+    })
+    .then(aqiResults => aqiResults.map(aqiResult => aqiResult.aqi))
+    .then(aqis => Math.max(...aqis));
+  const currentData = JSON.stringify({ aqi });
 
-  const stationPath = objectScan(["AQO_TYPE.STATIONS[0].STRD[*].$.NAME"], {
-    filterFn: (key, value) => value === process.env.CITY,
-    joined: false
-  })(xmlJson);
-  const station = get(xmlJson, stationPath[0].slice(0, -2));
-  const pm25 = objectScan(["**"], {
-    filterFn: (key, value) => key.endsWith('.NM') && value === 'PM25',
-    joined: false
-  })(station);
-  const currentData = JSON.stringify({ aqi: get(station, pm25[0].slice(0, -1).concat("VL")) });
-
-  const s3Key = `${process.env.CITY}-last-reading.json.gz`;
+  const s3Key = `${process.env.STATION}-last-reading.json.gz`;
 
   let previousData = "{}";
   try {
@@ -77,7 +98,7 @@ module.exports.cron = rollbar.wrap(async () => {
         `_${info.impact}_`,
         info.recommendation,
         info.image,
-        `*Reference*: \`http://tiny.cc/nn83wy\``
+        `*Source*: \`http://tiny.cc/nn83wy\``
       ].join("\n\n");
       await slack.message.channel(process.env.SLACK_CHANNEL, msg);
       return "changed";
