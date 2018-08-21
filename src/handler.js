@@ -34,7 +34,7 @@ const PollutantMapping = {
 };
 
 module.exports.cron = rollbar.wrap(async () => {
-  const aqi = await request({
+  const maxAqiResult = await request({
     method: 'GET',
     uri: `http://www.env.gov.bc.ca/epd/bcairquality/aqo/xml/${process.env.STATION}_Current_Month.xml`
   })
@@ -60,9 +60,8 @@ module.exports.cron = rollbar.wrap(async () => {
       });
       return Promise.all(promises);
     })
-    .then(aqiResults => aqiResults.map(aqiResult => aqiResult.aqi))
-    .then(aqis => Math.max(...aqis));
-  const currentData = JSON.stringify({ aqi });
+    .then(aqiResults => aqiResults.sort((a, b) => b.aqi - a.aqi)[0]);
+  const currentData = JSON.stringify(maxAqiResult);
 
   const s3Key = `${process.env.STATION}-last-reading.json.gz`;
 
@@ -82,12 +81,14 @@ module.exports.cron = rollbar.wrap(async () => {
       Key: s3Key
     });
 
-    const prevLevel = getLevel(get(JSON.parse(previousData), "aqi", 0));
-    const curLevel = getLevel(get(JSON.parse(currentData), "aqi", 0));
+    const prevPollutant = JSON.parse(previousData);
+    const prevLevel = getLevel(get(prevPollutant, "aqi", 0));
+    const curPollutant = JSON.parse(currentData);
+    const curLevel = getLevel(get(curPollutant, "aqi", 0));
     if (prevLevel !== curLevel) {
       const info = levels[curLevel];
       const msg = [
-        `*Air Quality Index*: \`${info.level}\``,
+        `*Air Quality Index*: \`${info.level}\` *(${curPollutant.pollutant})*`,
         `_${info.impact}_`,
         info.recommendation,
         info.image,

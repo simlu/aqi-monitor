@@ -5,17 +5,6 @@
   "timeout": 5000,
   "expect": {
     "to.deep.contain()": {
-      "name": "AwsError"
-    }
-  },
-  "expect(context)": {
-    "to.deep.contain()": {
-      "service": "s3",
-      "function": "getObject"
-    }
-  },
-  "expect(context.error)": {
-    "to.deep.contain()": {
       "message": "The request signature we calculated does not match the signature you provided. Check your key and signing method.",
       "code": "SignatureDoesNotMatch"
     }

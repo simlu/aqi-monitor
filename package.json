@@ -24,7 +24,7 @@
     "babel-register": "7.0.0-beta.3",
     "coveralls": "3.0.2",
     "js-gardener": "1.31.1",
-    "lambda-tdd": "1.21.1",
+    "lambda-tdd": "1.21.2",
     "nock": "9.6.1",
     "nyc": "12.0.2",
     "semantic-release": "15.9.9"
@@ -88,8 +88,8 @@
   ],
   "dependencies": {
     "aqi-bot": "1.1.4",
-    "aws-sdk": "2.296.0",
-    "aws-sdk-wrap": "1.0.1",
+    "aws-sdk": "2.297.0",
+    "aws-sdk-wrap": "1.0.2",
     "lambda-rollbar": "1.9.9",
     "lodash.get": "4.4.2",
     "request": "2.88.0",
