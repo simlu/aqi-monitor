@@ -14,6 +14,30 @@ Allows monitoring of multiple Cities by using multiple deploys.
 
 Only works for Cities from [BC](https://www2.gov.bc.ca/gov/content/environment/air-land-water/air/air-quality/current-air-quality-data).
 
+## How can I run this for my slack team?
+
+Very easy! Just follow the instructions below for setup and testing. Then configure a city and deploy.
+
+## Setup and Testing
+
+Requires [npm](https://www.npmjs.com/) and [serverless framework](https://serverless.com/) to be installed globally.
+
+### Install Dependencies and Test
+
+In your project folder run
+
+```sh
+npm install
+```
+
+then 
+
+```sh
+npm test
+```
+
+This project uses [js-gardener](https://github.com/simlu/js-gardener) and [lambda-tdd](https://github.com/simlu/lambda-tdd). More details on testing and debuggging are documented under those projects.
+
 ## Configure a City
 
 1) Create config with city name under `config/CITY.yml`
@@ -49,7 +73,7 @@ Follow the instructions provided [here](https://github.com/simlu/slack-sdk#obtai
 
 ## Deploy
 
-Requires serverless framework to be installed. Use `npm i -g serverless`. Then run:
+Requires you to have an AWS account setup and credentials configured.
 
 ```bash
 npm t && npm run clean-build && sls deploy --city=[FILL CITY NAME] && npm run clean
