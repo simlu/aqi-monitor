@@ -64,12 +64,12 @@ module.exports.cron = rollbar.wrap(async () => {
         });
       return result;
     })
-    .then(measure => Object
+    .then(measure => Promise.all(Object
       .keys(PollutantMapping)
       .map(pollutantType => aqibot.AQICalculator.getAQIResult(
         aqibot.PollutantType[pollutantType],
         measure[PollutantMapping[pollutantType]]
-      )))
+      ))))
     .then(aqiResults => aqiResults.sort((a, b) => b.aqi - a.aqi)[0]);
   const currentData = JSON.stringify(maxAqiResult);
 
