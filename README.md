@@ -12,7 +12,7 @@ Notifies Slack Channel with Status Message when the level changes.
 
 Allows monitoring of multiple Cities by using multiple deploys.
 
-Only works for Cities from [BC](https://www2.gov.bc.ca/gov/content/environment/air-land-water/air/air-quality/current-air-quality-data).
+Only works for Cities from [BC](https://envistaweb.env.gov.bc.ca/).
 
 ## How can I run this for my slack team?
 
@@ -56,8 +56,8 @@ SLACK_SESSION_TOKEN: your-slack-session-token
 Pick a region from the [aws availability zones](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html).
 
 ### Station
-Go to [https://www2.gov.bc.ca](https://www2.gov.bc.ca/gov/content/environment/air-land-water/air/air-quality/current-air-quality-data), 
-search for the desired station, click it and then copy the corresponding number from the url, e.g. `0500886` for` `Kelowna College`.
+Go to [https://envistaweb.env.gov.bc.ca/](https://envistaweb.env.gov.bc.ca/), 
+search for the desired station, click it and then copy the corresponding number from the url, e.g. `9` for` `Kelowna College`.
 
 ### Rollbar Access Token
 Sign up for [Rollbar](https://rollbar.com/signup/), create a new Project and use a server token. This is optional - if you prefer not to enable monitoring you can simply set this to an empty string (`""`).

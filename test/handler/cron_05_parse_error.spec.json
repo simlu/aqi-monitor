@@ -4,7 +4,7 @@
   "success": false,
   "timeout": 5000,
   "expect(message)": {
-    "to.deep.equal()": "Unexpected end\nLine: 0\nColumn: 12\nChar: "
+    "to.deep.equal()": "Cannot convert undefined or null to object"
   },
   "event": {}
 }
