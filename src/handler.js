@@ -1,7 +1,7 @@
 const fs = require("fs");
 const zlib = require("zlib");
 const request = require("request-promise-native");
-const xml2js = require("xml2js");
+const cheerio = require("cheerio");
 const get = require("lodash.get");
 const aqibot = require('aqi-bot');
 const rollbar = require('lambda-rollbar')({
@@ -16,8 +16,6 @@ const slack = require("slack-sdk")(
   process.env.SLACK_SESSION_TOKEN
 );
 
-const xmlParser = new xml2js.Parser();
-
 const levels = JSON.parse(fs.readFileSync(`${__dirname}/levels.json`));
 const getLevel = aqi => String(Math.max(...Object
   .keys(levels)
@@ -27,39 +25,51 @@ const getLevel = aqi => String(Math.max(...Object
 const PollutantMapping = {
   PM10: 'PM10',
   PM25: 'PM25',
-  SO2: 'SO-2',
-  NO2: 'NO-2',
-  O3: 'OZNE',
-  CO: 'C--O'
+  SO2: 'SO2',
+  NO2: 'NO2',
+  O3: 'O3',
+  CO: 'CO'
 };
 
 module.exports.cron = rollbar.wrap(async () => {
   const maxAqiResult = await request({
     method: 'GET',
-    uri: `http://www.env.gov.bc.ca/epd/bcairquality/aqo/xml/${process.env.STATION}_Current_Month.xml`
+    uri: `https://envistaweb.env.gov.bc.ca/OnlineA.aspx?ST_ID=${process.env.STATION};1;GRID`,
+    headers: {
+      'User-Agent': "Mozilla/5.0 (Windows NT 6.1; Win64; x64) "
+        + "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36"
+    }
   })
-    .then(e => new Promise((resolve, reject) => xmlParser
-      .parseString(e, (err, res) => (err ? reject(err) : resolve(get(res, "AQO_TYPE.STATIONS[0].STRD[0].READS[0].RD")
-        .reduce((list, reading) => Object.assign(list, {
-          [new Date(get(reading, "$.DT").replace(
-            /^(\d\d\d\d),(\d\d),(\d\d),(\d\d),(\d\d),(\d\d)$/,
-            "$1-$2-$3T$4:$5:$6"
-          )) / 1000]: get(reading, "PARAMS.0.PV")
-            .reduce((obj, measure) => Object.assign(obj, { [measure.$.NM]: measure.$.VL }), {})
-        }), {}))
-      ))))
-    .then((measures) => {
-      const promises = [];
-      const curHour = Math.max(...Object.keys(measures));
-      Object.keys(PollutantMapping).forEach((pollutantType) => {
-        const timeline = [];
-        for (let i = 0; i < 12; i += 1) {
-          timeline.push(parseFloat(get(measures, [curHour - i * 3600, PollutantMapping[pollutantType]], -1)));
-        }
-        promises.push(aqibot.AQICalculator.getAQIResult(aqibot.PollutantType[pollutantType], timeline[0]));
-      });
-      return Promise.all(promises);
+    .then((r) => {
+      const $ = cheerio.load(r);
+      const result = [];
+      $('tr', '#C1WebGrid1').each((idxTr, tr) => result.push(tr.children
+        .filter(td => td.name === "td")
+        .map(td => td.children[0].children[0].data.trim())));
+      return Object.assign(...result.slice(2).map(tr => ({
+        [Math.round(Date.parse(tr[0]) / 1000)]: Object.assign(...tr.slice(1).map((td, idx) => ({
+          [result[0].slice(1)[idx]]: Number(td)
+        })))
+      })));
     })
+    .then((r) => {
+      const result = {};
+      Object.keys(r).map(unix => Number(unix)).sort().reverse()
+        .forEach((unix) => {
+          Object.entries(r[unix]).forEach(([key, value]) => {
+            if (!Number.isNaN(value) && result[key] === undefined) {
+              result[key] = value;
+            }
+          });
+        });
+      return result;
+    })
+    .then(measure => Object
+      .keys(PollutantMapping)
+      .map(pollutantType => aqibot.AQICalculator.getAQIResult(
+        aqibot.PollutantType[pollutantType],
+        measure[PollutantMapping[pollutantType]]
+      )))
     .then(aqiResults => aqiResults.sort((a, b) => b.aqi - a.aqi)[0]);
   const currentData = JSON.stringify(maxAqiResult);
 
