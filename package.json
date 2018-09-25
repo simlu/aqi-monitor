@@ -27,7 +27,7 @@
     "lambda-tdd": "1.24.0",
     "nock": "9.6.1",
     "nyc": "13.0.1",
-    "semantic-release": "15.9.14"
+    "semantic-release": "15.9.16"
   },
   "nyc": {
     "tempDirectory": "./coverage/.nyc_output",
