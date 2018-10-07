@@ -1,8 +1,8 @@
 {
   "name": "aqi-monitor",
+  "private": true,
   "version": "0.0.0-development",
   "description": "Monitor AQI using AWS Lambda",
-  "main": "lib/index.js",
   "scripts": {
     "test": "npm run clean && npm run gardener && npm run test-simple",
     "clean": "rm -rf lib",
