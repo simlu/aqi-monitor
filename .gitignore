@@ -30,3 +30,4 @@ lib/
 # configuration
 config/*.yml
 .serverless
+/test/env.recording.yml
