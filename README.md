@@ -40,7 +40,7 @@ This project uses [js-gardener](https://github.com/simlu/js-gardener) and [lambd
 
 ## Configure a City / Workspace
 
-1) Create config with under `config/[FILL CONFIG NAME].yml`
+1) Create config under `config/[FILL CONFIG NAME].yml`
 2) Fill in variables
 
 ```yml
