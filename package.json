@@ -18,16 +18,16 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "7.0.0-beta.3",
-    "babel-eslint": "9.0.0",
+    "babel-eslint": "10.0.1",
     "babel-plugin-transform-flow-comments": "7.0.0-beta.3",
     "babel-preset-flow": "7.0.0-beta.3",
     "babel-register": "7.0.0-beta.3",
     "coveralls": "3.0.2",
-    "js-gardener": "1.31.5",
-    "lambda-tdd": "1.24.0",
-    "nock": "9.6.1",
+    "js-gardener": "1.31.7",
+    "lambda-tdd": "1.25.2",
+    "nock": "10.0.0",
     "nyc": "13.0.1",
-    "semantic-release": "15.9.14"
+    "semantic-release": "15.9.17"
   },
   "nyc": {
     "tempDirectory": "./coverage/.nyc_output",
@@ -88,13 +88,13 @@
   ],
   "dependencies": {
     "aqi-bot": "1.1.4",
-    "aws-sdk": "2.312.0",
+    "aws-sdk": "2.329.0",
     "aws-sdk-wrap": "1.1.1",
     "cheerio": "1.0.0-rc.2",
     "lambda-rollbar": "1.9.11",
     "lodash.get": "4.4.2",
     "request": "2.88.0",
     "request-promise-native": "1.0.5",
-    "slack-sdk": "1.0.0"
+    "slack-sdk": "1.1.0"
   }
 }

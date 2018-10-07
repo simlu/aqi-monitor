@@ -2,7 +2,7 @@
 [![Test Coverage](https://img.shields.io/coveralls/simlu/aqi-monitor/master.svg)](https://coveralls.io/github/simlu/aqi-monitor?branch=master)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=simlu/aqi-monitor)](https://dependabot.com)
 [![Dependencies](https://david-dm.org/simlu/aqi-monitor/status.svg)](https://david-dm.org/simlu/aqi-monitor)
-[![Gardener](https://github.com/simlu/js-gardener/blob/master/assets/badge.svg)](https://github.com/simlu/js-gardener)
+[![Gardener](https://github.com/blackflux/js-gardener/blob/master/assets/badge.svg)](https://github.com/blackflux/js-gardener)
 
 # AQI Monitor
 
@@ -38,9 +38,9 @@ npm test
 
 This project uses [js-gardener](https://github.com/simlu/js-gardener) and [lambda-tdd](https://github.com/simlu/lambda-tdd). More details on testing and debuggging are documented under those projects.
 
-## Configure a City
+## Configure a City / Workspace
 
-1) Create config with city name under `config/CITY.yml`
+1) Create config with under `config/[FILL CONFIG NAME].yml`
 2) Fill in variables
 
 ```yml
@@ -76,5 +76,5 @@ Follow the instructions provided [here](https://github.com/simlu/slack-sdk#obtai
 Requires you to have an AWS account setup and credentials configured.
 
 ```bash
-npm t && npm run clean-build && sls deploy --city=[FILL CITY NAME] && npm run clean
+npm t && npm run clean-build && sls deploy --config=[FILL CONFIG NAME] && npm run clean
 ```

@@ -11,13 +11,13 @@ package:
 provider:
   name: aws
   runtime: nodejs8.10
-  stage: ${opt:city}
-  region: ${file(config/${opt:city}.yml):REGION}
+  stage: ${opt:config}
+  region: ${file(config/${opt:config}.yml):REGION}
   memorySize: 128
   timeout: 30
   versionFunctions: false
   environment:
-    ${file(config/${opt:city}.yml)}
+    ${file(config/${opt:config}.yml)}
   iamRoleStatements:
     - Effect: "Allow"
       Action:
