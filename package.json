@@ -96,6 +96,6 @@
     "lodash.get": "4.4.2",
     "request": "2.88.0",
     "request-promise-native": "1.0.5",
-    "slack-sdk": "1.1.0"
+    "slack-sdk": "1.1.3"
   }
 }
