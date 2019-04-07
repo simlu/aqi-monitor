@@ -18,20 +18,22 @@
   "author": "Lukas Siemon",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "7.0.0-beta.3",
     "babel-eslint": "10.0.1",
-    "babel-plugin-transform-flow-comments": "7.0.0-beta.3",
-    "babel-preset-flow": "7.0.0-beta.3",
-    "babel-register": "7.0.0-beta.3",
-    "coveralls": "3.0.2",
-    "js-gardener": "1.31.7",
-    "lambda-tdd": "1.25.2",
-    "nock": "10.0.0",
-    "nyc": "13.0.1",
-    "semantic-release": "15.9.17"
+    "coveralls": "3.0.3",
+    "js-gardener": "1.38.6",
+    "lambda-tdd": "2.7.0",
+    "nock": "10.0.6",
+    "nyc": "13.3.0",
+    "semantic-release": "15.13.3",
+    "@babel/register": "7.4.0",
+    "@babel/core": "7.4.3",
+    "@babel/cli": "7.4.3",
+    "@babel/plugin-transform-flow-comments": "7.4.0",
+    "@babel/plugin-proposal-object-rest-spread": "7.4.3",
+    "@babel/preset-flow": "7.0.0"
   },
   "nyc": {
-    "tempDirectory": "./coverage/.nyc_output",
+    "tempDir": "./coverage/.nyc_output",
     "report-dir": "./coverage",
     "check-coverage": true,
     "per-file": false,
@@ -47,7 +49,7 @@
       "text-summary"
     ],
     "require": [
-      "babel-register"
+      "@babel/register"
     ],
     "extension": [],
     "cache": true,
@@ -77,10 +79,6 @@
   "engines": {
     "node": ">= 8.10"
   },
-  "repository": {
-    "type": "git",
-    "url": ".git"
-  },
   "bugs": {
     "url": "/issues"
   },
@@ -89,13 +87,17 @@
   ],
   "dependencies": {
     "aqi-bot": "1.1.4",
-    "aws-sdk": "2.329.0",
-    "aws-sdk-wrap": "1.1.1",
-    "cheerio": "1.0.0-rc.2",
-    "lambda-rollbar": "1.9.11",
+    "aws-sdk": "2.437.0",
+    "aws-sdk-wrap": "1.1.6",
+    "cheerio": "1.0.0-rc.3",
+    "lambda-rollbar": "1.10.4",
     "lodash.get": "4.4.2",
     "request": "2.88.0",
-    "request-promise-native": "1.0.5",
-    "slack-sdk": "1.1.0"
+    "request-promise-native": "1.0.7",
+    "slack-sdk": "1.1.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simlu/aqi-monitor.git"
   }
 }
