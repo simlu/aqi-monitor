@@ -90,7 +90,7 @@
     "aws-sdk": "2.437.0",
     "aws-sdk-wrap": "1.1.6",
     "cheerio": "1.0.0-rc.3",
-    "lambda-rollbar": "1.10.4",
+    "lambda-rollbar": "1.10.11",
     "lodash.get": "4.4.2",
     "request": "2.88.0",
     "request-promise-native": "1.0.7",
