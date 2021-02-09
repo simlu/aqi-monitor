@@ -88,7 +88,7 @@
   "dependencies": {
     "aqi-bot": "1.1.4",
     "aws-sdk": "2.437.0",
-    "aws-sdk-wrap": "1.1.6",
+    "aws-sdk-wrap": "7.1.0",
     "cheerio": "1.0.0-rc.3",
     "lambda-rollbar": "1.10.4",
     "lodash.get": "4.4.2",
