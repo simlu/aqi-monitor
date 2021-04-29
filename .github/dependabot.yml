@@ -1,0 +1,40 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+    day: tuesday
+    time: "09:00"
+  open-pull-requests-limit: 1
+  target-branch: dev
+  ignore:
+  - dependency-name: aws-sdk-wrap
+    versions:
+    - 5.0.1
+    - 7.0.0
+    - 7.1.0
+    - 7.2.1
+    - 7.2.2
+    - 8.0.2
+    - 9.1.1
+    - 9.2.7
+    - 9.2.8
+    - 9.2.9
+    - 9.4.1
+  - dependency-name: lambda-tdd
+    versions:
+    - 2.13.15
+    - 2.13.16
+    - 3.0.0
+  - dependency-name: slack-sdk
+    versions:
+    - 1.1.30
+    - 1.1.31
+    - 1.1.32
+  - dependency-name: lodash
+    versions:
+    - 4.17.20
+  - dependency-name: handlebars
+    versions:
+    - 4.7.6
